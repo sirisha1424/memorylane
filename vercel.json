@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/api/submitMessage.ts",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "src/pages/index.tsx",
+        "use": "@vercel/next"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/submitMessage",
+        "dest": "/api/submitMessage.ts"
+      }
+    ]
+  }
+  
