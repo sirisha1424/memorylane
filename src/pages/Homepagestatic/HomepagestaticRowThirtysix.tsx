@@ -3,18 +3,16 @@ import { Img, Button, Input, Text, Heading } from "../../components";
 import UserProfile2 from "../../components/UserProfile2";
 
 export default function HomepagestaticRowThirtysix() {
-  const [id, setId] = useState("");  // Optional, you can remove if not required
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
   // Function to handle form submission
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
-      id, // Optional, you can remove if not required
       name,
       email,
       message,
@@ -32,7 +30,6 @@ export default function HomepagestaticRowThirtysix() {
       if (response.ok) {
         setSuccessMessage("Message successfully sent!");
         // Clear form fields
-        setId("");
         setName("");
         setEmail("");
         setMessage("");
@@ -69,8 +66,8 @@ export default function HomepagestaticRowThirtysix() {
               <div className="mx-[22px] flex items-start gap-[22px]">
                 <div className="mb-[46px] flex flex-1 items-center justify-between gap-5">
                   <div className="ml-[84px] flex w-[30%] flex-col gap-[60px] rounded-[12px] md:ml-0 md:w-full">
-                    <UserProfile2 className="mr-3.5" />
-                    <UserProfile2 />
+                    <UserProfile2 key="1" className="mr-3.5" />
+                    <UserProfile2 key="2" />
                   </div>
                   <div className="flex w-[60%] flex-col items-start gap-6 rounded-[12px] bg-white-a700 px-9 py-6 shadow-xs">
                     <Text size="text2xl" as="p" className="!font-playfairdisplay capitalize !text-pink-900_01">
@@ -84,6 +81,7 @@ export default function HomepagestaticRowThirtysix() {
                           placeholder="Name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
+                          autoComplete="name" // Corrected camelCase
                           className="flex h-[52px] w-full items-center rounded-[12px] border border-blue_gray-50 bg-gray-50_01 px-4 text-[14px]"
                         />
                         <Input
@@ -92,6 +90,7 @@ export default function HomepagestaticRowThirtysix() {
                           placeholder="Email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
+                          autoComplete="email" // Corrected camelCase
                           className="flex h-[52px] w-full items-center rounded-[12px] border border-blue_gray-50 bg-gray-50_01 px-4 text-[14px]"
                         />
                       </div>
