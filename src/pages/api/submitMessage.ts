@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Client } from 'pg';
+import Redis from 'ioredis';
 import dotenv from 'dotenv';
 
 // Load environment variables from the .env file
 dotenv.config();
+
+// Create a new Redis client
+const redis = new Redis(process.env.REDIS_URL); // Use the REDIS_URL environment variable for connection
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -15,33 +18,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Please fill out all fields.' });
     }
 
-    // Check if POSTGRES_URL environment variable is set
-    const connectionString = process.env.POSTGRES_URL;
-    if (!connectionString) {
-      return res.status(500).json({ message: 'Database connection string is not configured.' });
-    }
-
-    // Create a new PostgreSQL client
-    const client = new Client({
-      connectionString, // Use the POSTGRES_URL environment variable for connection
-    });
-
     try {
-      // Connect to the database
-      await client.connect();
+      // Generate a unique key for the message
+      const messageKey = `message:${Date.now()}`;
 
-      // Insert the form data into the 'names' table
-      const query = 'INSERT INTO names (name, email, message) VALUES ($1, $2, $3) RETURNING *';
-      const values = [name, email, message];
-      const result = await client.query(query, values);
-
-      // Close the database connection
-      await client.end();
+      // Store the message in Redis
+      await redis.hmset(messageKey, { name, email, message });
 
       // Respond with success
-      res.status(200).json({ message: 'Message stored successfully!', data: result.rows[0] });
+      res.status(200).json({ message: 'Message stored successfully!' });
     } catch (error) {
-      console.error('Database error:', error);
+      console.error('Redis error:', error);
 
       // Respond with error
       res.status(500).json({ message: 'Error storing the message.' });
