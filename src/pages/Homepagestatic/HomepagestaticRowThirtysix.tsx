@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Img, Button, TextArea, Input, Text, Heading } from "../../components";
+import { Img, Button, Input, Text, Heading } from "../../components"; // Adjust the import path if needed
 import UserProfile2 from "../../components/UserProfile2";
 
 export default function HomepagestaticRowThirtysix() {
+  // State hooks for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Handle form submission
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Form data
     const formData = {
       name,
       email,
@@ -34,10 +36,9 @@ export default function HomepagestaticRowThirtysix() {
         setEmail("");
         setMessage("");
       } else {
-        setSuccessMessage("An error occurred while sending the message.");
+        setSuccessMessage("Failed to send message.");
       }
     } catch (error) {
-      console.error("Error submitting the form", error);
       setSuccessMessage("An error occurred while sending the message.");
     }
   };
@@ -89,38 +90,40 @@ export default function HomepagestaticRowThirtysix() {
                     <Text size="text2xl" as="p" className="!font-playfairdisplay capitalize !text-pink-900_01">
                       Write to us
                     </Text>
-                    <form onSubmit={handleSubmit} className="flex flex-col items-start gap-10">
-                      <div className="flex gap-10 md:flex-col">
-                        <Input
-                          type="text"
-                          name="name"
-                          placeholder="Name"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="flex h-[52px] w-full items-center justify-center rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-4 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
-                        />
-                        <Input
-                          type="email"
-                          name="email"
-                          placeholder="Email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="flex h-[52px] w-full items-center justify-center rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-4 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
+                    <form onSubmit={handleSubmit} className="flex flex-col items-start gap-10 self-stretch">
+                      <div className="flex flex-col gap-5 self-stretch">
+                        <div className="flex gap-10 md:flex-col">
+                          <Input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="flex h-[52px] w-full items-center justify-center rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-4 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
+                          />
+                          <Input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="flex h-[52px] w-full items-center justify-center rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-4 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
+                          />
+                        </div>
+                        <textarea
+                          name="message"
+                          placeholder="Your message…"
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
+                          className="h-[150px] rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-[18px] py-3.5 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
                         />
                       </div>
-                      <TextArea
-                        name="message"
-                        placeholder="Your message…"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        className="h-[150px] w-full rounded-[12px] border border-solid border-blue_gray-50 bg-gray-50_01 px-[18px] py-3.5 text-[14px] capitalize text-blue_gray-200 shadow-4xl"
-                      />
                       <Button
                         type="submit"
                         rightIcon={
                           <Img src="images/img_arrowright.svg" alt="Arrow Right" className="my-0.5 h-[16px] w-[16px]" />
                         }
-                        className="flex h-[40px] min-w-[150px] flex-row items-center justify-center gap-1.5 rounded-[12px] bg-gray-300 pl-5 pr-3 text-center text-[14px] font-medium capitalize text-white-a700"
+                        className="flex h-[40px] min-w-[150px] flex-row items-center justify-center gap-1.5 rounded-[12px] bg-pink-900_01 pl-5 pr-3 text-center text-[14px] font-medium capitalize text-white-a700"
                       >
                         Send Message
                       </Button>
